@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-
+import sys
 user = raw_input("Enter your Codeforces ID\n")
 
 user = user.replace(" ","")
@@ -16,19 +16,25 @@ content = requests.get(url)
 
 soup = BeautifulSoup(content.text,'html.parser')
 
-table = soup.find('table',{"class" : "status-frame-datatable"})
-
-rows = table.find_all('tr')
-
+# print(soup)
 
 ok = True
+
+
+table = soup.find('table',{"class" : "status-frame-datatable"})
+
+if(table is None):
+    sys.exit("There Is No Such User")
+    
+rows = table.find_all('tr')
+
 
 for row in rows:
     data = row.find_all('td')
     
     if(len(data) > 0):
         if((data[0].get_text(strip = True)).encode('utf-8') == "No items"):
-            print("No Data To Display")
+            print("No AC Submissions")
             ok = False
             break
         problem = (data[3].get_text(strip = True)).encode('utf-8')
