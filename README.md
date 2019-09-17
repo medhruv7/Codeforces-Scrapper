@@ -8,3 +8,8 @@ pip install beautifulsoup4
 
 
 pip install requests
+
+Note !!
+
+
+For python3 change 'wb' to 'w' and it will work fine
